@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<style>
+body {
+	font-size: 12px;
+}
+</style>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#btn").click(parsing);
+	});
+
+	function parsing() {
+		$.ajax({
+			url : "table.do",
+			type : "get",
+			dataType : "html",
+			success : resultHtml,
+			error : function() {
+				alert("error")
+			}
+		});
+
+	}
+
+	function resultHtml(data) {
+		var len = $(data).find("td").length;
+		var bible = "<table>"
+
+		for (var i = 0; i < len; i++) {
+
+			bible += "<tr>"
+			
+			var title = $(data).find("td").eq(i).text();
+			var price = $(data).find("td").eq(i).text();
+			var comp = $(data).find("td").eq(i).text();
+			
+			bible += "<td>" + title + "</td>";
+			bible += "<td>" + price + "</td>";
+			bible += "<td>" + comp + "</td>";
+			bible += "</tr>"
+		}
+		bible += "</table>"
+		$("#list").empty();
+		$("#list").append(bible);
+
+	}
+</script>
+</head>
+<body>
+
+	<input type="button" value="책정보가져오기" id="btn" />
+	<hr />
+
+	<div id='list'></div>
+
+
+
+
+
+
+
+</body>
+</html>
